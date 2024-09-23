@@ -3,7 +3,11 @@ from setuptools import setup, find_packages
 setup(
     name='OuiPlataform',
     version='0.1.0',
-    packages=find_packages(where='src'),
+    packages=[
+
+        "src.__init__.py"
+        "src.BaseSession.py"
+    ]
     package_dir={'': 'src'},
     install_requires=[
         # Adicione suas dependências aqui
