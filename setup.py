@@ -3,15 +3,13 @@ from setuptools import setup, find_packages
 setup(
     name='OuiPlataform',
     version='0.1.0',
-    packages=[
+    packages=find_packages(where='src'),  
+    package_dir={'': 'src'},  
+    package_data={
+        '': ['*.py'],  
+    },
 
-        "src.__init__.py"
-        "src.BaseSession.py"
-    ]
-    package_dir={'': 'src'},
-    install_requires=[
-        # Adicione suas dependências aqui
-    ],
+    install_requires=[],
     author='Mateus',
     author_email='mateusmoutinho01@gmail.com',
     description='OUI Plataform SDK',
