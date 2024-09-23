@@ -15,7 +15,7 @@ class BaseSession:
             headers = {}
         headers['token'] = self.token
 
-        result = post(f'{self.url}/{route}',headers=headers,data=body)
+        result = post(f'https://{self.url}{route}',headers=headers,data=body)
         raise_if_its_not_ok(result)
         return result
 
@@ -27,6 +27,6 @@ class BaseSession:
         result = self.autenticated_requisition_raw(route,headers,body)
         return result.content
 
-    def autenticated_requisition_text(self,route:str,headers:Union[dict,None],body:Union[dict, bytes,None])->str:
+    def autenticated_requisition_text(self,route:str,headers:dict,body:Union[dict, bytes,None])->str:
         result = self.autenticated_requisition_raw(route,headers,body)
         return result.text

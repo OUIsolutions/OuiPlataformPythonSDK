@@ -1,3 +1,4 @@
+from .Entity import Entity
 from .algo import raise_if_its_not_ok
 from .BaseSession import BaseSession
 from requests import post
@@ -14,7 +15,8 @@ class Session(BaseSession):
         self.token = result.json()['token']
 
     def get_entity(self,name:str):
-        pass
+        return Entity(self.url,self.token,name)
 
-    def created_entity(self,name:str):
-        pass
+    def create_entity(self,name:str):
+        self.autenticated_requisition_raw(route='/api/entity/add_entity',headers={'Entity':name},body=None)
+        return Entity(self.url,self.token,name)
