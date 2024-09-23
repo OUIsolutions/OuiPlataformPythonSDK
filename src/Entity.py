@@ -13,21 +13,28 @@ class Entity(BaseSession):
 
     def get_json(self,name:str)->dict:
         return self.autenticated_requisition_json(
-            route='/api/get_document',
+            route='/api/entity/get_document',
             headers={'entity':self.name,'document':name},
             body=None
         )
 
+    def set_json(self,name:str,body:dict):
+        self.autenticated_requisition_raw(
+            route='/api/entity/add_document',
+            headers={'entity':self.name,'document':name},
+            body=body
+        )
+
     def get_dynamic_doc(self,name:str)->bytes:
         return self.autenticated_requisition_bytes(
-            route='/api/get_document',
+            route='/api/entity/get_dynamic_document_instance',
             headers={'entity':self.name,'document':name},
             body=None
         )
 
     def get_static_doc(self,name:str)->bytes:
         return self.autenticated_requisition_bytes(
-            route='/api/get_document',
+            route='/api/entity/get_document',
             headers={'entity':self.name,'document':name},
             body=None
         )

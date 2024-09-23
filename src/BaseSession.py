@@ -1,3 +1,4 @@
+import json
 from requests.adapters import Response
 from .algo import raise_if_its_not_ok
 
@@ -10,10 +11,15 @@ class BaseSession:
         self.url = url
         self.token = None
 
-    def autenticated_requisition_raw(self,route:str,headers:Union[dict,None],body:Union[dict, bytes,None])->Response:
+    def autenticated_requisition_raw(self,route:str,headers:Union[dict,None],body:Union[dict, bytes,str,None])->Response:
         if not headers:
             headers = {}
         headers['token'] = self.token
+        body = body
+        if body.__class__  == dict:
+            body = json.dumps(body,indent=4)
+        if body.__class__ == str:
+            body =  body.encode("utf-8")
 
         result = post(f'https://{self.url}{route}',headers=headers,data=body)
         raise_if_its_not_ok(result)
