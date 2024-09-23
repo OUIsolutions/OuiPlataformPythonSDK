@@ -8,7 +8,6 @@ setup(
     package_data={
         '': ['*.py'],  
     },
-
     install_requires=[],
     author='Mateus',
     author_email='mateusmoutinho01@gmail.com',
