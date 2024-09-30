@@ -11,6 +11,8 @@ class Entity(BaseSession):
         self.token = token
         self.name = name
 
+    def __str__(self) -> str:
+        return self.name
 
     def list_all_static_documents(self)->List[str]:
         result =  self.autenticated_requisition_json(
