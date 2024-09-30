@@ -48,6 +48,9 @@ class Session(BaseSession):
                   entities.append(Entity(self.url,self.token,e['Hide.name']))
         return entities
 
+
+
+
     def create_entity(self,name:str)->Entity:
         self.autenticated_requisition_raw(route='/api/entity/add_entity',headers={'Entity':name},body=None)
         return Entity(self.url,self.token,name)
