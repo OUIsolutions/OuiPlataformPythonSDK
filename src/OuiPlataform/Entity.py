@@ -1,5 +1,5 @@
 import json
-from typing_extensions import Union
+from typing_extensions import List, Union
 from requests import post
 from .algo import raise_if_its_not_ok
 from .BaseSession import BaseSession
@@ -11,6 +11,19 @@ class Entity(BaseSession):
         self.token = token
         self.name = name
 
+
+    def list_all_static_documents(self)->List[str]:
+        result =  self.autenticated_requisition_json(
+            route='/api/entity/describe_entity',
+            headers={'entity':self.name},
+            body=None
+        )
+        docs =list(map(lambda d: d['name'],result['documents']))
+        return docs
+
+    def list_jsons(self)->List[str]:
+        all = self.list_all_static_documents()
+        return list(filter(lambda d:d.endswith('.json'),all))
 
 
     def get_json(self,name:str,output:Union[str,None]=None)->dict:
