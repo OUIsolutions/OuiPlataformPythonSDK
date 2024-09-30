@@ -11,7 +11,7 @@ class BaseSession:
         self.url = url
         self.token = None
 
-    def autenticated_requisition_raw(self,route:str,headers:Union[dict,None],body:Union[dict, bytes,str,None])->Response:
+    def autenticated_requisition_raw(self,route:str,headers:Union[dict,None],body:Union[dict, bytes,str,None]=None)->Response:
         if not headers:
             headers = {}
         headers['token'] = self.token
@@ -25,14 +25,14 @@ class BaseSession:
         raise_if_its_not_ok(result)
         return result
 
-    def autenticated_requisition_json(self,route:str,headers:Union[dict,None],body:Union[dict, bytes,None])->dict:
+    def autenticated_requisition_json(self,route:str,headers:Union[dict,None],body:Union[dict, bytes,None]=None)->dict:
         result = self.autenticated_requisition_raw(route,headers,body)
         return result.json()
 
-    def autenticated_requisition_bytes(self,route:str,headers:Union[dict,None],body:Union[dict, bytes,None])->bytes:
+    def autenticated_requisition_bytes(self,route:str,headers:Union[dict,None],body:Union[dict, bytes,None]=None)->bytes:
         result = self.autenticated_requisition_raw(route,headers,body)
         return result.content
 
-    def autenticated_requisition_text(self,route:str,headers:dict,body:Union[dict, bytes,None])->str:
+    def autenticated_requisition_text(self,route:str,headers:dict,body:Union[dict, bytes,None]=None)->str:
         result = self.autenticated_requisition_raw(route,headers,body)
         return result.text

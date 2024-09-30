@@ -3,6 +3,7 @@ from typing_extensions import Union
 from .Entity import Entity
 from .algo import raise_if_its_not_ok
 from .BaseSession import BaseSession
+from .Search import Search
 from requests import post
 
 
@@ -18,6 +19,26 @@ class Session(BaseSession):
 
     def get_entity(self,name:str)->Entity:
         return Entity(self.url,self.token,name)
+
+    def list_searchs(
+        self,
+        contains:Union[str,None]=None,
+        quantity:Union[int,None]=None,
+        created_before:Union[str,None]=None,
+        created_after:Union[str,None]=None    
+    )->List[Search]:
+        headers = {
+            'Contains':contains,
+            'Quantity':quantity,
+            'Created-After':created_after,
+            'Created-Before':created_before
+        }
+        result = self.autenticated_requisition_json(
+            route='/api/search/list_search',
+            headers=headers
+        )
+        return list(map(lambda s:Search(self.url,self.token,s['name']),result))
+
 
     def list_entities(self,
         contains:Union[str,None]=None,
