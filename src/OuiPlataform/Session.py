@@ -4,6 +4,7 @@ from .Entity import Entity
 from .algo import raise_if_its_not_ok
 from .BaseSession import BaseSession
 from .Search import Search
+from .DynamicDocs import DynamicDoc
 from requests import post
 
 
@@ -38,6 +39,27 @@ class Session(BaseSession):
             headers=headers
         )
         return list(map(lambda s:Search(self.url,self.token,s['name']),result))
+
+
+    def list_dynamic_docs(
+      self,
+      contains:Union[str,None]=None,
+      quantity:Union[int,None]=None,
+      created_before:Union[str,None]=None,
+      created_after:Union[str,None]=None
+  )->List[Search]:
+      headers = {
+          'Contains':contains,
+          'Quantity':quantity,
+          'Created-After':created_after,
+          'Created-Before':created_before
+      }
+      result = self.autenticated_requisition_json(
+          route='/api/search/list_search',
+          headers=headers
+      )
+      return list(map(lambda s:Search(self.url,self.token,s['name']),result))
+
 
 
     def get_search(self,name)->Search:
