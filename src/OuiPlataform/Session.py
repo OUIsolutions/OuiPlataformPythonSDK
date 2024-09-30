@@ -25,7 +25,7 @@ class Session(BaseSession):
         contains:Union[str,None]=None,
         quantity:Union[int,None]=None,
         created_before:Union[str,None]=None,
-        created_after:Union[str,None]=None    
+        created_after:Union[str,None]=None
     )->List[Search]:
         headers = {
             'Contains':contains,
@@ -39,6 +39,9 @@ class Session(BaseSession):
         )
         return list(map(lambda s:Search(self.url,self.token,s['name']),result))
 
+
+    def get_search(self,name)->Search:
+        return Search(self.url,self.token,name)
 
     def list_entities(self,
         contains:Union[str,None]=None,
