@@ -10,7 +10,7 @@ class Session(BaseSession):
         super().__init__(url)
 
     def autenticate(self,login:str,password:str):
-        result = post(f'https://{self.url}/api/public/create_token',headers={'login':login,'password':password})
+        result = post(f'{self.url}/api/public/create_token',headers={'login':login,'password':password})
         raise_if_its_not_ok(result)
         self.token = result.json()['token']
 

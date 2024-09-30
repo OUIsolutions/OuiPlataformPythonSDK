@@ -21,7 +21,7 @@ class BaseSession:
         if body.__class__ == str:
             body =  body.encode("utf-8")
 
-        result = post(f'https://{self.url}{route}',headers=headers,data=body)
+        result = post(f'{self.url}{route}',headers=headers,data=body)
         raise_if_its_not_ok(result)
         return result
 

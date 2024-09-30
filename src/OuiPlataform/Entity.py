@@ -1,3 +1,5 @@
+import json
+from typing_extensions import Union
 from requests import post
 from .algo import raise_if_its_not_ok
 from .BaseSession import BaseSession
@@ -11,12 +13,17 @@ class Entity(BaseSession):
 
 
 
-    def get_json(self,name:str)->dict:
-        return self.autenticated_requisition_json(
+    def get_json(self,name:str,output:Union[str,None]=None)->dict:
+        result =  self.autenticated_requisition_json(
             route='/api/entity/get_document',
             headers={'entity':self.name,'document':name},
             body=None
         )
+        if output:
+            with open(output,"w") as arq:
+                arq.write(json.dumps(result,indent=4))
+        return result
+
 
     def set_json(self,name:str,body:dict):
         self.autenticated_requisition_raw(
@@ -25,16 +32,26 @@ class Entity(BaseSession):
             body=body
         )
 
-    def get_dynamic_doc(self,name:str)->bytes:
-        return self.autenticated_requisition_bytes(
+    def get_dynamic_doc(self,name:str,mode:str,output:Union[str,None]=None)->bytes:
+        result =  self.autenticated_requisition_bytes(
             route='/api/entity/get_dynamic_document_instance',
-            headers={'entity':self.name,'document':name},
+            headers={'entity':self.name,'document':name,'mode':mode},
             body=None
         )
+        if output:
+            with open(output,"wb") as arq:
+                arq.write(result)
+        return result
 
-    def get_static_doc(self,name:str)->bytes:
-        return self.autenticated_requisition_bytes(
+
+    def get_static_doc(self,name:str,output:Union[str,None]=None)->bytes:
+
+        result =  self.autenticated_requisition_bytes(
             route='/api/entity/get_document',
             headers={'entity':self.name,'document':name},
             body=None
         )
+        if output:
+            with open(output,"wb") as arq:
+                arq.write(result)
+        return result
