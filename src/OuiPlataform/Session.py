@@ -14,9 +14,9 @@ class Session(BaseSession):
         raise_if_its_not_ok(result)
         self.token = result.json()['token']
 
-    def get_entity(self,name:str):
+    def get_entity(self,name:str)->Entity:
         return Entity(self.url,self.token,name)
 
-    def create_entity(self,name:str):
+    def create_entity(self,name:str)->Entity:
         self.autenticated_requisition_raw(route='/api/entity/add_entity',headers={'Entity':name},body=None)
         return Entity(self.url,self.token,name)
