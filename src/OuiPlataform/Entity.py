@@ -26,6 +26,18 @@ class Entity(BaseSession):
         return list(filter(lambda d:d.endswith('.json'),all))
 
 
+
+    def list_all_dynamic_documents(self)->List[str]:
+        result =  self.autenticated_requisition_json(
+            route='/api/entity/describe_entity',
+            headers={'entity':self.name},
+            body=None
+        )
+        docs =list(map(lambda d: d['name'],result['dynamic_docs']))
+        return docs
+
+
+
     def get_json(self,name:str,output:Union[str,None]=None)->dict:
         result =  self.autenticated_requisition_json(
             route='/api/entity/get_document',
