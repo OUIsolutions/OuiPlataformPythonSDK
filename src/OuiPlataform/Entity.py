@@ -70,6 +70,27 @@ class Entity(BaseSession):
                 arq.write(result)
         return result
 
+    def upload_static_document(self,document_name:str,document:bytes):
+        self.autenticated_requisition_raw(
+            route='/api/entity/add_document',
+            headers={'entity':self.name,'document':document_name},
+            body=document
+        )
+
+
+    def upload_static_document_from_file(self,document_name:str,document_file:str):
+        with open(document_file,'rb') as arq:
+            document = arq.read()
+
+        self.autenticated_requisition_raw(
+            route='/api/entity/add_document',
+            headers={'entity':self.name,'document':document_name},
+            body=document
+        )
+
+
+
+
 
     def get_static_doc(self,name:str,output:Union[str,None]=None)->bytes:
 
