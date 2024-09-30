@@ -15,6 +15,7 @@ class Search(BaseSession):
     def __str__(self) -> str:
         return self.name
 
+
     def  get_search_code(self,output:Union[str,None]=None)->str:
         result = self.autenticated_requisition_json(
             route='/api/search/get_search_props',
@@ -24,6 +25,12 @@ class Search(BaseSession):
             with open(output,'w') as arq:
                 arq.write(result['function'])
         return result['function']
+
+    def remove(self):
+        self.autenticated_requisition_raw(
+            route='/api/search/remove_search',
+            headers={'Search':self.name}
+        )
 
     def get_search_props(self)->dict:
         result = self.autenticated_requisition_json(

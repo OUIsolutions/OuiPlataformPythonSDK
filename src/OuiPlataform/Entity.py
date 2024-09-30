@@ -28,7 +28,6 @@ class Entity(BaseSession):
         return list(filter(lambda d:d.endswith('.json'),all))
 
 
-
     def list_all_dynamic_documents(self)->List[str]:
         result =  self.autenticated_requisition_json(
             route='/api/entity/describe_entity',
@@ -41,6 +40,9 @@ class Entity(BaseSession):
 
 
     def get_json(self,name:str,output:Union[str,None]=None)->dict:
+        if not name.endswith(".json"):
+            name = name + ".json"
+
         result =  self.autenticated_requisition_json(
             route='/api/entity/get_document',
             headers={'entity':self.name,'document':name},
@@ -53,6 +55,8 @@ class Entity(BaseSession):
 
 
     def set_json(self,name:str,body:dict):
+        if not name.endswith(".json"):
+            name = name + ".json"
         self.autenticated_requisition_raw(
             route='/api/entity/add_document',
             headers={'entity':self.name,'document':name},

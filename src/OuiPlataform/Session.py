@@ -43,6 +43,14 @@ class Session(BaseSession):
     def get_search(self,name)->Search:
         return Search(self.url,self.token,name)
 
+
+    def create_search(self,name)->Search:
+        self.autenticated_requisition_raw(
+            route='/api/search/add_search',
+            headers={'Search':name}
+        )
+        return Search(self.url,self.token,name)
+
     def list_entities(self,
         contains:Union[str,None]=None,
         quantity:Union[int,None]=None,
