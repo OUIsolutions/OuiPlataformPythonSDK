@@ -41,13 +41,14 @@ class Session(BaseSession):
         return list(map(lambda s:Search(self.url,self.token,s['name']),result))
 
 
+
     def list_dynamic_docs(
       self,
       contains:Union[str,None]=None,
       quantity:Union[int,None]=None,
       created_before:Union[str,None]=None,
       created_after:Union[str,None]=None
-  )->List[Search]:
+  )->List[DynamicDoc]:
       headers = {
           'Contains':contains,
           'Quantity':quantity,
@@ -55,11 +56,10 @@ class Session(BaseSession):
           'Created-Before':created_before
       }
       result = self.autenticated_requisition_json(
-          route='/api/search/list_search',
+          route='/api/dynamic_docs/list_documents',
           headers=headers
       )
-      return list(map(lambda s:Search(self.url,self.token,s['name']),result))
-
+      return list(map(lambda s:DynamicDoc(self.url,self.token,s['name']),result))
 
 
     def get_search(self,name)->Search:
