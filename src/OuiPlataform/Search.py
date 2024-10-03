@@ -1,8 +1,5 @@
 
-import json
-from typing_extensions import List, Union
-from requests import post
-from .algo import raise_if_its_not_ok
+from typing_extensions import Union
 from .BaseSession import BaseSession
 
 class Search(BaseSession):

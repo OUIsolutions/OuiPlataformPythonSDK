@@ -307,3 +307,22 @@ search.remove()
 ```
 
 **Nota:** Note que o método `remove` não retorna nada e caso a busca não exista, uma exceção será lançada.
+
+## Mapper
+
+### get_mapper_function
+
+### set_mapper_function
+
+
+## Documentos Dinâmicos
+
+Objetos dinâmicos são aqueles gerados automaticamente pela plataforma a partir de informações e configurações previamente definidas. A classe `DynamicDoc` é responsável por representar um documento dinâmico e possui métodos para realizar ações como listar, buscar, criar, etc.
+
+### get_generator_code
+
+### get_validator_code
+
+### set_validator_code
+
+### set_generator_code
