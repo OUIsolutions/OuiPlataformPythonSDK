@@ -46,7 +46,7 @@ class Search(BaseSession):
             body=code
         )
 
-    def set_search_props(self,props:dict):
+    def set_search_props(self,props:list):
         self.autenticated_requisition_raw(
             route='/api/search/set_search_props',
             headers={'Search':self.name},

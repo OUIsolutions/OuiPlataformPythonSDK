@@ -187,6 +187,123 @@ ent.set_json("dados_capa", {
 })
 ```
 
+### Enviando Documentos Estáticos
 
+É possível enviar documentos estáticos para uma entidade utilizando o método `upload_static_document_from_file` do objeto `Entity`. Esse método recebe como parâmetro o nome do documento estático e o caminho do arquivo que será enviado:
 
+```python
+from OuiPlataform.Session import Session
 
+s = Session("https://domain.com")
+s.autenticate("username", "password")
+
+ent = s.get_entity("entity_name")
+
+ent.upload_static_document_from_file("document_name", "path/to/file")
+```
+
+### Pega Documentos Estáticos
+
+### Pegar Documentos Dinâmicos
+
+## Search
+
+Com os objetos `Search` é possível gerar, excluir e pegar buscas de uma entidade. Para criar um objeto `Search`, basta instanciar um objeto da classe `Search` passando como parâmetro o nome da busca, porém, caso não saiba o nome da busca, é possível listar todas as buscas disponíveis na plataforma utilizando o método `list_searches` do objeto `session`, o qual retorna uma lista de objetos `Search`:
+
+```python
+from OuiPlataform.Session import Session
+
+s = Session("https://domain.com")
+s.autenticate("username", "password")
+
+searches = s.list_searches()
+search = searches[0]
+
+search = s.get_search("search_name")
+```
+
+Agora que temos um objeto `Search`, é possível realizar diversas ações, assim como definir e recuperar props, definir e recuperar codigos, etc.
+
+### Definindo Propriedades
+
+É possível definir propriedades de uma busca utilizando o método `set_prop` do objeto `Search`. Esse método recebe como parâmetro uma lista de propriedades no formato de dicionário, exemplo:
+
+```python
+from OuiPlataform.Session import Session
+
+props = [{'name': 'tempo_maximo', 'required': True, 'question': 'Informe o tempo m�ximo em minutos', 'type': 'number'}, {'name': 'tempo_minimo', 'required': True, 'question': 'Informe o tempo m�nimo em minutos', 'type': 'number'}]
+
+s = Session("https://domain.com")
+s.autenticate("username", "password")
+
+search = s.get_search("search_name")
+
+search.set_search_props(props)
+```
+
+### Pegando Propriedades
+
+É possível pegar as propriedades de uma busca utilizando o método `get_search_props` do objeto `Search`. Esse método retorna uma lista de propriedades no formato de dicionário:
+
+```python
+from OuiPlataform.Session import Session
+
+s = Session("https://domain.com")
+s.autenticate("username", "password")
+
+search = s.get_search("search_name")
+
+print(search.get_search_props())
+```
+
+### Definindo Códigos
+
+É possível definir códigos de uma busca utilizando o método `set_codes` do objeto `Search`. Esse método recebe como parâmetro uma string que será o código lua da busca:
+
+```python
+from OuiPlataform.Session import Session
+
+s = Session("https://domain.com")
+s.autenticate("username", "password")
+
+search = s.get_search("search_name")
+
+search.set_search_code(
+"""function filter(props)
+ return true
+end
+""")
+
+```
+
+### Pegando Códigos
+
+É possível pegar o código de uma busca utilizando o método `get_search_code` do objeto `Search`. Esse método retorna uma string que é o código lua da busca:
+
+```python
+from OuiPlataform.Session import Session
+
+s = Session("https://domain.com")
+s.autenticate("username", "password")
+
+search = s.get_search("search_name")
+
+print(search.get_search_code())
+```
+
+### Removendo Busca
+
+Através do método `remove` do objeto `Search` é possível remover uma busca de uma entidade. Quando esse método é chamado, a busca é removida da plataforma:
+
+```python
+from OuiPlataform.Session import Session
+
+s = Session("https://domain.com")
+s.autenticate("username", "password")
+
+search = s.get_search("search_name")
+
+search.remove()
+```
+
+**Nota:** Note que o método `remove` não retorna nada e caso a busca não exista, uma exceção será lançada.
