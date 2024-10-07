@@ -1,12 +1,13 @@
 import json
 from typing_extensions import List, Union
+from .LoginProps import LoginProps
 from .BaseSession import BaseSession
 
 class Entity(BaseSession):
 
-    def __init__(self,url:str,token:str,name:str) -> None:
-        super().__init__(url)
-        self.token = token
+    def __init__(self,url:str,login_props:LoginProps,name:str) -> None:
+        super().__init__(url,login_props)
+
         self.name = name
 
     def __str__(self) -> str:

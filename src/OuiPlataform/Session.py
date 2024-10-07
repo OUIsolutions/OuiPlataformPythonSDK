@@ -1,7 +1,8 @@
 from typing import List
 from typing_extensions import Union
+
+from .LoginProps import LoginProps
 from .Entity import Entity
-from .algo import raise_if_its_not_ok
 from .BaseSession import BaseSession
 from .Search import Search
 from .DynamicDocs import DynamicDoc
@@ -10,16 +11,11 @@ from requests import post
 
 class Session(BaseSession):
 
-    def __init__(self,url:str,):
-        super().__init__(url)
-
-    def autenticate(self,login:str,password:str):
-        result = post(f'{self.url}/api/public/create_token',headers={'login':login,'password':password})
-        raise_if_its_not_ok(result)
-        self.token = result.json()['token']
+    def __init__(self,url:str,login:Union[str,None],password:Union[str,None],token:str):
+        super().__init__(url,LoginProps(login,password,token))
 
     def get_entity(self,name:str)->Entity:
-        return Entity(self.url,self.token,name)
+        return Entity(self.url,self.login_props,name)
 
     def list_searchs(
         self,
@@ -38,7 +34,7 @@ class Session(BaseSession):
             route='/api/search/list_search',
             headers=headers
         )
-        return list(map(lambda s:Search(self.url,self.token,s['name']),result))
+        return list(map(lambda s:Search(self.url,self.login_props,s['name']),result))
 
 
 
@@ -59,11 +55,11 @@ class Session(BaseSession):
           route='/api/dynamic_docs/list_documents',
           headers=headers
       )
-      return list(map(lambda s:DynamicDoc(self.url,self.token,s['name']),result))
+      return list(map(lambda s:DynamicDoc(self.url,self.login_props,s['name']),result))
 
 
     def get_search(self,name)->Search:
-        return Search(self.url,self.token,name)
+        return Search(self.url,self.login_props,name)
 
 
     def create_search(self,name)->Search:
@@ -71,7 +67,7 @@ class Session(BaseSession):
             route='/api/search/add_search',
             headers={'Search':name}
         )
-        return Search(self.url,self.token,name)
+        return Search(self.url,self.login_props,name)
 
     def list_entities(self,
         contains:Union[str,None]=None,
@@ -97,12 +93,12 @@ class Session(BaseSession):
         entities = []
         for  e in result:
             if e.get('name'):
-               entities.append(Entity(self.url,self.token,e['name']))
+               entities.append(Entity(self.url,self.login_props,e['name']))
             if e.get('Hide.name'):
-                  entities.append(Entity(self.url,self.token,e['Hide.name']))
+                  entities.append(Entity(self.url,self.login_props,e['Hide.name']))
         return entities
 
 
     def create_entity(self,name:str)->Entity:
         self.autenticated_requisition_raw(route='/api/entity/add_entity',headers={'Entity':name},body=None)
-        return Entity(self.url,self.token,name)
+        return Entity(self.url,self.login_props,name)
