@@ -104,6 +104,8 @@ class Session(BaseSession):
     def list_lua_errors(self,
         chunk:int=1,
         quantity:int=30,
+        error_name:Union[str,None]=None,
+        entity:Union[str,None]=None,
         created_before:Union[str,None]=None,
         created_after:Union[str,None]=None
 
@@ -112,6 +114,8 @@ class Session(BaseSession):
         headers = {
             'Quantity':str(quantity),
             'Chunk':str(chunk),
+            'errorname':error_name,
+            'entity':entity,
             'Created-After':created_after,
             'Created-Before':created_before
         }
