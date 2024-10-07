@@ -11,7 +11,7 @@ from requests import post
 
 class Session(BaseSession):
 
-    def __init__(self,url:str,login:Union[str,None],password:Union[str,None],token:str):
+    def __init__(self,url:str,login:Union[str,None],password:Union[str,None],token:Union[str,None]=None):
         super().__init__(url,LoginProps(login,password,token))
 
     def get_entity(self,name:str)->Entity:

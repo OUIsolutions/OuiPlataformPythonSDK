@@ -5,3 +5,6 @@ class PlataformError (Exception):
         super().__init__()
         self.code = code
         self.message = message
+
+    def __str__(self) -> str:
+        return self.message
