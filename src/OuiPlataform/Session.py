@@ -1,6 +1,7 @@
 from typing import List
 from typing_extensions import Union
 
+from .LuaError import LuaError
 from .LoginProps import LoginProps
 from .Entity import Entity
 from .BaseSession import BaseSession
@@ -71,7 +72,8 @@ class Session(BaseSession):
 
     def list_entities(self,
         contains:Union[str,None]=None,
-        quantity:Union[int,None]=None,
+        chunk:int=1,
+        quantity:int=30,
         created_before:Union[str,None]=None,
         created_after:Union[str,None]=None,
         search:Union[str,None]=None,
@@ -79,7 +81,8 @@ class Session(BaseSession):
 
         headers = {
             'Contains':contains,
-            'Quantity':quantity,
+            'Quantity':str(quantity),
+            'Chunk':str(chunk),
             'Created-After':created_after,
             'Created-Before':created_before,
             'Search':search
@@ -98,6 +101,37 @@ class Session(BaseSession):
                   entities.append(Entity(self.url,self.login_props,e['Hide.name']))
         return entities
 
+    def list_lua_errors(self,
+        chunk:int=1,
+        quantity:int=30,
+        created_before:Union[str,None]=None,
+        created_after:Union[str,None]=None
+
+        )->List[LuaError]:
+
+        headers = {
+            'Quantity':str(quantity),
+            'Chunk':str(chunk),
+            'Created-After':created_after,
+            'Created-Before':created_before
+        }
+
+        result = self.autenticated_requisition_json(
+            route='/api/lua_errors/list_lua_errors',
+            headers=headers
+        )
+        errors = []
+        for e in result:
+            created = LuaError(
+                name=e['error_name'],
+                entity=e.get('entity_name'),
+                id=e['id'],
+                content=e['content'],
+                creation_unix=e['creation_unix'],
+                creation=e['creation']
+            )
+            errors.append(created)
+        return errors
 
     def create_entity(self,name:str)->Entity:
         self.autenticated_requisition_raw(route='/api/entity/add_entity',headers={'Entity':name},body=None)
