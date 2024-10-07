@@ -37,7 +37,7 @@ class Entity(BaseSession):
 
 
 
-    def get_json(self,name:str,output:Union[str,None]=None)->dict:
+    def get_json(self,name:str,output:Union[str,None]=None)->Union[dict,list]:
         if not name.endswith(".json"):
             name = name + ".json"
 
@@ -72,7 +72,7 @@ class Entity(BaseSession):
                 arq.write(result)
         return result
 
-    def upload_static_document(self,document_name:str,document:bytes):
+    def upload_static_document(self,document_name:str,document:Union[bytes,str]):
         self.autenticated_requisition_raw(
             route='/api/entity/add_document',
             headers={'entity':self.name,'document':document_name},

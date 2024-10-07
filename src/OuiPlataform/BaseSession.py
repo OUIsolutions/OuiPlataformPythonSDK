@@ -1,7 +1,6 @@
 import json
 from requests.adapters import Response
-from .algo import raise_if_its_not_ok
-
+from .PlataformError import PlataformError
 from requests import post
 from typing_extensions import Union
 
@@ -11,18 +10,21 @@ class BaseSession:
         self.url = url
         self.token = None
 
-    def autenticated_requisition_raw(self,route:str,headers:Union[dict,None],body:Union[dict, bytes,str,None]=None)->Response:
+    def autenticated_requisition_raw(self,route:str,headers:Union[dict,None],body:Union[dict, bytes,str,None,list]=None)->Response:
         if not headers:
             headers = {}
         headers['token'] = self.token
-        body = body
-        if body.__class__  == dict:
+        if body.__class__  in [dict,list]:
             body = json.dumps(body,indent=4)
         if body.__class__ == str:
             body =  body.encode("utf-8")
 
         result = post(f'{self.url}{route}',headers=headers,data=body)
-        raise_if_its_not_ok(result)
+        if result.status_code < 200 or result.status_code >= 300:
+            parsed = result.json()
+            raise PlataformError(parsed['code'],parsed['message'])
+
+
         return result
 
     def autenticated_requisition_json(self,route:str,headers:Union[dict,None],body:Union[dict, bytes,None]=None)->dict:
