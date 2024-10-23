@@ -127,6 +127,8 @@ class Session(BaseSession):
         errors = []
         for e in result:
             created = LuaError(
+                url=self.url,
+                login_props=self.login_props,
                 name=e['error_name'],
                 entity=e.get('entity_name'),
                 id=e['id'],

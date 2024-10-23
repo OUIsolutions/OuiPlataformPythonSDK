@@ -13,6 +13,14 @@ class Entity(BaseSession):
     def __str__(self) -> str:
         return self.name
 
+    def self_destroy(self):
+        self.autenticated_requisition_json(
+            route='/api/entity/remove_entity',
+            headers={'entity':self.name},
+            body=None
+        )
+
+
     def list_all_static_documents(self)->List[str]:
         result =  self.autenticated_requisition_json(
             route='/api/entity/describe_entity',

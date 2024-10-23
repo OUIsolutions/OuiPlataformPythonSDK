@@ -12,7 +12,7 @@ class BaseSession:
         self.url = url
         self.login_props = login_props
 
-    def autenticated_requisition_raw(self,route:str,headers:Union[dict,None],body:Union[dict, bytes,str,None,list]=None)->Response:
+    def autenticated_requisition_raw(self,route:str,headers:Union[dict,None]=None,body:Union[dict,list, bytes,str,None,list]=None)->Response:
 
         if not self.login_props.token:
             creation = post(f'{self.url}/api/public/create_token',headers={
@@ -28,6 +28,7 @@ class BaseSession:
         if not headers:
             headers = {}
         headers['token'] = self.login_props.token
+
         if body.__class__  in [dict,list]:
             body = json.dumps(body,indent=4)
         if body.__class__ == str:
