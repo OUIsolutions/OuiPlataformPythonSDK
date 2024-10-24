@@ -12,7 +12,7 @@ pip install git+https://github.com/OUIsolutions/OuiPlataformPythonSDK
 
 ## Utilização
 
-Para utilizar o SDK, basta importar o módulo `Session` e instanciar um objeto da classe `Session`, passando como parâmetro a URL da plataforma:
+Para utilizar o SDK, basta importar o módulo `Session` e instanciar um objeto da classe `Session`, passando como parâmetro a URL, USUARIO e SENHA da plataforma:
 
 ```python
 from OuiPlataform.Session import Session
@@ -21,19 +21,6 @@ session = Session("https://domain.com", 'username', 'password')
 ```
 
 Com o objeto `session` instanciado, é possível realizar diversas ações na plataforma, como por exemplo, listar templates, listar buscas, dentre outras coisas.
-
-## Primeiros Passos
-
-Para começar a utilizar o SDK, é necessário realizar a autenticação na plataforma. Para isso, basta utilizar o método `autenticate` do objeto `session`:
-
-```python
-from OuiPlataform.Session import Session
-
-session = Session("url", 'username', 'password')
-```
-
-Com a sessão criada e autenticada, você poderá realizar ações utilizando Entity,Search,
-dentre outras classes.
 
 ## Entity
 
