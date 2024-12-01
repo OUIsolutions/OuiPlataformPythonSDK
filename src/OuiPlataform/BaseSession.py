@@ -48,6 +48,7 @@ class BaseSession:
 
     def autenticated_requisition_json(self,route:str,headers:Union[dict,None],body:Union[dict, bytes,None]=None)->dict:
         result = self.autenticated_requisition_raw(route,headers,body)
+        result.encoding = 'utf-8'
         return result.json()
 
     def autenticated_requisition_bytes(self,route:str,headers:Union[dict,None],body:Union[dict, bytes,None]=None)->bytes:
@@ -56,4 +57,5 @@ class BaseSession:
 
     def autenticated_requisition_text(self,route:str,headers:dict,body:Union[dict, bytes,None]=None)->str:
         result = self.autenticated_requisition_raw(route,headers,body)
+        result.encoding = 'utf-8'
         return result.text
