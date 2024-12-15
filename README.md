@@ -12,29 +12,15 @@ pip install git+https://github.com/OUIsolutions/OuiPlataformPythonSDK
 
 ## Utilização
 
-Para utilizar o SDK, basta importar o módulo `Session` e instanciar um objeto da classe `Session`, passando como parâmetro a URL da plataforma:
+Para utilizar o SDK, basta importar o módulo `Session` e instanciar um objeto da classe `Session`, passando como parâmetro a URL, USUARIO e SENHA da plataforma:
 
 ```python
 from OuiPlataform.Session import Session
 
-session = Session("https://domain.com")
+session = Session("https://domain.com", 'username', 'password')
 ```
 
 Com o objeto `session` instanciado, é possível realizar diversas ações na plataforma, como por exemplo, listar templates, listar buscas, dentre outras coisas.
-
-## Primeiros Passos
-
-Para começar a utilizar o SDK, é necessário realizar a autenticação na plataforma. Para isso, basta utilizar o método `autenticate` do objeto `session`:
-
-```python
-from OuiPlataform.Session import Session
-
-session = Session()
-session.autenticate('username', 'password')
-```
-
-Com a sessão criada e autenticada, você poderá realizar ações utilizando Entity,Search,
-dentre outras classes.
 
 ## Entity
 
@@ -45,8 +31,7 @@ Para criar uma entidade, basta instanciar um objeto da classe `Entity` passando 
 ```python
 from OuiPlataform.Session import Session
 
-s = Session("https://domain.com")
-s.autenticate("username", "password")
+s = Session("https://domain.com", 'username', 'password')
 
 entities = s.list_entities()
 for entity in entities:
@@ -70,8 +55,7 @@ Com a lista de entidades em mãos, é possível instanciar um objeto `Entity` pa
 ```python
 from OuiPlataform.Session import Session
 
-s = Session("https://domain.com")
-s.autenticate("username", "password")
+s = Session("https://domain.com", 'username', 'password')
 
 entity = s.get_entity("entity_name")
 ```
@@ -85,8 +69,7 @@ Para listar os documentos estáticos de uma entidade, basta utilizar o método `
 ```python
 from OuiPlataform.Session import Session
 
-s = Session("https://domain.com")
-s.autenticate("username", "password")
+s = Session("https://domain.com", 'username', 'password')
 
 ent = s.get_entity("entity_name")
 
@@ -106,8 +89,7 @@ Para listar os documentos dinâmicos de uma entidade, basta utilizar o método `
 ```python
 from OuiPlataform.Session import Session
 
-s = Session("https://domain.com")
-s.autenticate("username", "password")
+s = Session("https://domain.com", 'username', 'password')
 
 ent = s.get_entity("entity_name")
 
@@ -126,8 +108,7 @@ Para listar os jsons de uma entidade, basta utilizar o método `list_all_jsons` 
 ```python
 from OuiPlataform.Session import Session
 
-s = Session("https://domain.com")
-s.autenticate("username", "password")
+s = Session("https://domain.com", 'username', 'password')
 
 ent = s.get_entity("entity_name")
 
@@ -147,8 +128,7 @@ print(ent.list_jsons())
 ```python
 from OuiPlataform.Session import Session
 
-s = Session("https://domain.com")
-s.autenticate("username", "password")
+s = Session("https://domain.com", 'username', 'password')
 
 ent = s.get_entity("entity_name")
 
@@ -175,8 +155,7 @@ print(ent.get_json("dados_capa"))
 ```python
 from OuiPlataform.Session import Session
 
-s = Session("https://domain.com")
-s.autenticate("username", "password")
+s = Session("https://domain.com", 'username', 'password')
 
 ent = s.get_entity("entity_name")
 
@@ -194,8 +173,7 @@ ent.set_json("dados_capa", {
 ```python
 from OuiPlataform.Session import Session
 
-s = Session("https://domain.com")
-s.autenticate("username", "password")
+s = Session("https://domain.com", 'username', 'password')
 
 ent = s.get_entity("entity_name")
 
@@ -213,8 +191,7 @@ Com os objetos `Search` é possível gerar, excluir e pegar buscas de uma entida
 ```python
 from OuiPlataform.Session import Session
 
-s = Session("https://domain.com")
-s.autenticate("username", "password")
+s = Session("https://domain.com", 'username', 'password')
 
 searches = s.list_searches()
 search = searches[0]
@@ -233,8 +210,7 @@ from OuiPlataform.Session import Session
 
 props = [{'name': 'tempo_maximo', 'required': True, 'question': 'Informe o tempo m�ximo em minutos', 'type': 'number'}, {'name': 'tempo_minimo', 'required': True, 'question': 'Informe o tempo m�nimo em minutos', 'type': 'number'}]
 
-s = Session("https://domain.com")
-s.autenticate("username", "password")
+s = Session("https://domain.com", 'username', 'password')
 
 search = s.get_search("search_name")
 
@@ -248,8 +224,7 @@ search.set_search_props(props)
 ```python
 from OuiPlataform.Session import Session
 
-s = Session("https://domain.com")
-s.autenticate("username", "password")
+s = Session("https://domain.com", 'username', 'password')
 
 search = s.get_search("search_name")
 
@@ -263,8 +238,7 @@ print(search.get_search_props())
 ```python
 from OuiPlataform.Session import Session
 
-s = Session("https://domain.com")
-s.autenticate("username", "password")
+s = Session("https://domain.com", 'username', 'password')
 
 search = s.get_search("search_name")
 
@@ -283,8 +257,7 @@ end
 ```python
 from OuiPlataform.Session import Session
 
-s = Session("https://domain.com")
-s.autenticate("username", "password")
+s = Session("https://domain.com", 'username', 'password')
 
 search = s.get_search("search_name")
 
@@ -298,8 +271,7 @@ Através do método `remove` do objeto `Search` é possível remover uma busca d
 ```python
 from OuiPlataform.Session import Session
 
-s = Session("https://domain.com")
-s.autenticate("username", "password")
+s = Session("https://domain.com", 'username', 'password')
 
 search = s.get_search("search_name")
 
