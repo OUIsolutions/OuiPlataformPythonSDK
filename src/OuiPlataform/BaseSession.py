@@ -39,7 +39,7 @@ class BaseSession:
             parsed = result.json()
             if parsed['code'] == ErrorCodes.INVALID_TOKEN:
                  self.login_props.token = None
-                 self.autenticated_requisition_raw(route,headers,body)
+                 return self.autenticated_requisition_raw(route,headers,body)
             else:
                  raise PlataformError(parsed['code'],parsed['message'])
 
