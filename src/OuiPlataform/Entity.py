@@ -1,5 +1,5 @@
 import json
-from typing_extensions import List, Union
+from typing import List, Union
 from .LoginProps import LoginProps
 from .BaseSession import BaseSession
 
@@ -20,6 +20,20 @@ class Entity(BaseSession):
             body=None
         )
 
+
+    def lock(self):
+        self.autenticated_requisition_json(
+            route='/api/entity/lock_entity',
+            headers={'entity':self.name},
+            body=None
+        )
+
+    def unlock(self):
+        self.autenticated_requisition_json(
+            route='/api/entity/unlock_entity',
+            headers={'entity':self.name},
+            body=None
+        )
 
     def list_all_static_documents(self)->List[str]:
         result =  self.autenticated_requisition_json(

@@ -4,7 +4,7 @@ from .ErrorCodes import ErrorCodes
 from .LoginProps import LoginProps
 from .PlataformError import PlataformError
 from requests import post
-from typing_extensions import Union
+from typing import Union
 
 class BaseSession:
 

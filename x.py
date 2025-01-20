@@ -1,4 +1,0 @@
-
-v = None
-
-assert v

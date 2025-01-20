@@ -1,5 +1,5 @@
 
-from typing_extensions import Union
+from typing import Union
 
 from .LoginProps import LoginProps
 from .BaseSession import BaseSession

@@ -1,5 +1,5 @@
 from typing import List
-from typing_extensions import Union
+from typing import Union
 
 from .LuaError import LuaError
 from .LoginProps import LoginProps
