@@ -114,7 +114,11 @@ class Entity(BaseSession):
         )
 
 
-
+    def destroy_document(self,name:str):
+        self.autenticated_requisition_raw(
+            route='/api/entity/remove_document',
+            headers={'entity':self.name,'document':name},
+        )
 
 
     def get_static_doc(self,name:str,output:Union[str,None]=None)->bytes:
